@@ -38,7 +38,7 @@
         <dependency>
             <groupId>nicomed.telegram</groupId>
             <artifactId>botcommandmod</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2.0-SNAPSHOT</version>
         </dependency>        
 ##### Класс Вашего Spring приложения или бота пометить аннотацией:
         @Import(BotCommandMod.class)   
