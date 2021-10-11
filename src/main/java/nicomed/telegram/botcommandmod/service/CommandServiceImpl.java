@@ -35,7 +35,7 @@ public class CommandServiceImpl implements CommandService {
     private Set<BaseBotCommand> commandSet = new HashSet<>();
     private BaseBotCommand defaultCommand;
 
-    @Value("${botCommandMod.bad.description:Command not registered}")
+    @Value("${botCommandMod.bad.description:Show message if command not registered}")
     private String defaultBadDescription;
     @Value("${botCommandMod.help.description:Showing list registered commands}")
     private String defaultHelpDescription;
