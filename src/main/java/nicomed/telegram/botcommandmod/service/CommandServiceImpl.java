@@ -1,5 +1,6 @@
 package nicomed.telegram.botcommandmod.service;
 
+import com.google.common.base.Utf8;
 import lombok.extern.slf4j.Slf4j;
 import nicomed.telegram.botcommandmod.command.BadCommand;
 import nicomed.telegram.botcommandmod.command.BaseBotCommand;
@@ -13,15 +14,18 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 
 import javax.annotation.PostConstruct;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNullElse;
 import static nicomed.telegram.botcommandmod.util.CommandUtils.getCommandText;
 import static nicomed.telegram.botcommandmod.util.CommandUtils.isCommand;
 import static nicomed.telegram.botcommandmod.util.Constatnts.DEFAULT_BAD_COMMAND_MESSAGE;
+import static nicomed.telegram.botcommandmod.util.Constatnts.DEFAULT_HELP_COMMAND_MESSAGE;
 
 @Slf4j
 @Service
@@ -35,12 +39,19 @@ public class CommandServiceImpl implements CommandService {
     private String defaultBadDescription;
     @Value("${botCommandMod.help.description:Showing list registered commands}")
     private String defaultHelpDescription;
+    @Value("${botCommandMod.bad.message:Command not registered}")
+    private String defaultBadMessage;
+    @Value("${botCommandMod.help.message:Commands list}")
+    private String defaultHelpMessage;
 
     @PostConstruct
     private void init() {
         badCommand = new BadCommand("bad", defaultBadDescription);
+        badCommand.setMessage( new String(defaultBadMessage.getBytes(), UTF_8));
         defaultCommand = new DefaultCommand();
-        commandSet.add(new DefaultHelpCommand("help", defaultHelpDescription, this));
+        DefaultHelpCommand defaultHelpCommand = new DefaultHelpCommand("help", defaultHelpDescription, this);
+        defaultHelpCommand.setMessage( new String(defaultHelpMessage.getBytes(), UTF_8));
+        commandSet.add(defaultHelpCommand);
     }
 
     @Override

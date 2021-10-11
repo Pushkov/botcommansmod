@@ -18,4 +18,5 @@ public interface CommandService {
     void setDefaultCommand(BaseBotCommand command);
 
     void setBadCommandMessage(String message);
+
 }
