@@ -15,4 +15,9 @@ public class CommandUtils {
         return text.stripLeading().startsWith(COMMAND_PREFIX);
     }
 
+    public static String getCommandArguments(String text) {
+        Integer size = text.strip().split(" ")[0].length();
+        return text.substring(size).trim();
+    }
+
 }
